@@ -83,24 +83,11 @@ return|:x:|If true return to the menu call (default false)|bool
 
 Menu type |  Description |
 :--------:|--------------|
-<a href="#options">options</a>|Ask the user to choose among the child menus
+options|Ask the user to choose among the child menus
 <a href="#input">input</a>| Ask the user for an input
 <a href="#custom">custom</a>|Show custom text
-<a href="#return">return</a>|Exit from the menu and return all the store values
-<a href="#back">back</a>| Go back to the previous menu (exit the program in case of main menu)
-
-<a id="options"></a>
-
-## Options Menu
-
-> Ask user to choose between the childs menus
-
-### Fields
-
-Field Name | Required |Description
-:---------:|:--------:|-----------
-Name|:white_check_mark:| The name of the menu
-Value Name|:x:|
+return|Exit from the menu and return all the store values
+back| Go back to the previous menu (exit the program in case of main menu)
 
 <a id="input"></a>
 
