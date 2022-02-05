@@ -51,15 +51,6 @@ data = instance.start()
 
 ```json
 {
-    "info":{
-        "authors" : [{
-            "name" : "{Author name}",
-            "nickname" : "{Author nickname}",
-            "links" : ["{Author links}",...]
-        }],
-        "license": "{License type}",
-        "version": "{Version number}",
-    },
     "struct": {
         "banner": "{Bool value}",
         "childs":[
@@ -91,6 +82,7 @@ Menu type |  Description |
 :--------:|--------------|
 <a href="#options">options</a>|Ask the user to choose among the child menus
 <a href="#input">input</a>| Ask the user for an input
+<a href="#custom">custom</a>|Show custom text
 <a href="#return">return</a>|Exit from the menu and return all the store values
 <a href="#back">back</a>| Go back to the previous menu (exit the program in case of main menu)
 
@@ -152,6 +144,21 @@ Field Name | Required |Description|Data type
 :---------:|:--------:|-----------|:----:
 prompt|:white_check_mark:|The prompt asked when asking for the input| str
 keyName|:white_check_mark:|The key name of the input value in the response dict| str
+
+<div id="custom"></div>
+
+## Custom menu
+
+> A menu with custom text in it
+
+### Fields
+
+Field Name | Required |Description|Data type
+:---------:|:--------:|-----------|:----:
+content|:white_check_mark:|The content of the menu|str
+prompt|:x:|The prompt showed while waiting for an input(default '...')|str
+
+:warning:Note:warning:: The menu will wait for a key press and will execute what's stated in the <a href="#actions">'action'</a> field
 
 <div id="actions"></div>
 

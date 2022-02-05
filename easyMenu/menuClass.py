@@ -1,5 +1,8 @@
+from errno import ESTALE
 import os
 import json
+
+from prompt_toolkit import prompt
 
 class TreeNode:
     
@@ -89,7 +92,23 @@ class Menu:
 
             if currentNode.subMenu['type'] == 'input':
                 response[f"{currentNode.subMenu['keyName']}"] = self.__input_menu(currentNode,response)
-                action = currentNode.subMenu['action']
+                if 'action' in currentNode.subMenu: 
+                    action = currentNode.subMenu['action']
+                else:
+                    action = 'continue'
+                if action == 'return':
+                    break
+                if action == 'back':
+                    currentNode = currentNode.parentNode
+                if action == 'continue':
+                    currentNode.childs[0]
+
+            if currentNode.subMenu['type'] == 'custom':
+                self.__custom_menu(currentNode)
+                if 'action' in currentNode.subMenu: 
+                    action = currentNode.subMenu['action']
+                else:
+                    action = 'continue'
                 if action == 'return':
                     break
                 if action == 'back':
@@ -167,6 +186,23 @@ class Menu:
             print("")
 
         return response
+
+    # Custom menu
+    def __custom_menu(self,node:TreeNode) -> None:
+        data = node.subMenu
+
+        self.__cls()
+
+        self.__print_banner(data)
+
+        print(data['content']+"\n")
+
+        if 'prompt' in data.keys():
+            input(data['prompt'])
+        else:
+            input("...")
+
+        return
 
     # Print banner
     def __print_banner(self,data:dict) -> None:
