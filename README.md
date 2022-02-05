@@ -75,6 +75,7 @@ name|:white_check_mark:| The name of the menu|str
 type|:white_check_mark:|Specify the <a href="#">menu type</a>|str
 banner|:x:| Print the banner (default true) | bool
 action|:x:|<a href="#actions">Action</a> after menu (default continue)|str
+return|:x:|If true return to the menu call (default false)|bool
 
 ## Menu types
 
@@ -167,7 +168,6 @@ prompt|:x:|The prompt showed while waiting for an input(default '...')|str
 
 Name|Description
 :---:|:---------:
-return|Return to the menu start/resume call
 back| Return to the parent menu
 continue|Go to the first child menu
 
