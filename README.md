@@ -1,4 +1,4 @@
-# <div align="center">easyMenu</div>
+# <div align="center">PyEasyMenu</div>
 
 # <div align="center">:warning:THIS PROJECT IS IN AN EARLY DEVELOPMENT STAGE AND IT'S NOT AVAILABLE WITH PIP:warning:</div>
 
