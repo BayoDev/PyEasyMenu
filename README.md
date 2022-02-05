@@ -170,8 +170,9 @@ prompt|:x:|The prompt showed while waiting for an input(default '...')|str
 
 Name|Description
 :---:|:---------:
-back| Return to the parent menu
+back|Return to the parent menu
 continue|Go to the first child menu
+stay|Does not change the menu
 
 ### Note:
 The "continue" action does not change the behaviour of the "options" menu

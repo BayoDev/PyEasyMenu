@@ -1,5 +1,9 @@
+from lib2to3.pytree import Node
 import os
 import json
+from unittest import expectedFailure
+
+from pexpect import ExceptionPexpect
 
 class TreeNode:
     
@@ -9,10 +13,14 @@ class TreeNode:
 
     def __init__(self,parent: object,data: dict) -> None:
         self.parentNode = parent
+        childsNum = None
         if 'childs' in data.keys():    
-            data.pop('childs')
+            childsNum = len(data['childs'])
+            data['childs'] = []
         self.subMenu = data
         self.childs = []
+        if self.parentNode != None:
+            self.__check_error(data,childsNum)
 
     def add_child(self,child:object) -> None:
         self.childs.append(child)
@@ -23,6 +31,56 @@ class TreeNode:
                 newChild = TreeNode(self,sub.copy())
                 newChild.find_childs(sub)
                 self.add_child(newChild)
+
+    def __check_error(self,data:dict,childsNum: int) -> None:
+        rules = {
+            'allowedTypes':['options','input','custom','return','back'],
+            'allowedActions':['back','continue','stay'],
+            'globals': ['name','type'],
+            'options':['childs'],
+            'input': ['keyName','inputs'],
+            'inputs':['prompt','keyName'],
+            'custom':['content'],
+            'return':[],
+            'back':[]
+        }
+
+        for key in rules['globals']:
+            if key not in data.keys():
+                raise Exception(f"Missing '{key}' in:\n{data}")
+
+        if data['type'] == 'back':
+            return
+
+        if data['type'] not in rules['allowedTypes']:
+            raise Exception(f'Non existent type in:\n{data}')
+
+        if 'action' in data.keys():
+            if data['action'] not in rules['allowedActions']:
+                raise Exception(f"Non existent action in:\n{data}")
+            if data['action'] == 'continue' and (childsNum == 0 or childsNum == None):
+                raise Exception(f'Action continue but no childs found in:\n{data}')
+
+        if 'action' not in data.keys() and (childsNum == 0 or childsNum == None):
+            raise Exception(f"Default action is 'continue' so element must have at least one child:\n{data}")
+
+        for key in rules[data['type']]:
+            if key not in data.keys():
+                raise Exception(f"Missing required '{key}' field for {data['type']} in:\n{data}")
+
+        # Exception handling for options menu
+        if data['type'] == 'options':
+            if (childsNum == 0 or childsNum == None):
+                raise Exception(f'Options menu type must have at least one child element:\n{data}')
+
+        # Exception handling for input menu
+        if data['type'] == 'input':
+            for input in data['inputs']:
+                for field in rules['inputs']:
+                    if field not in input.keys():
+                        raise Exception(f"Missing required '{field}' field for 'inputs' item in:\n{data}")
+
+        return
 
 class Menu:
 
@@ -162,7 +220,7 @@ class Menu:
         data = node.subMenu
 
         inp = -1
-        while inp<0 or inp > len(node.childs):
+        while inp<=0 or inp > len(node.childs):
             self.__cls()
 
             self.__print_banner(data)
