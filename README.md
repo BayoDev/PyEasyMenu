@@ -1,6 +1,53 @@
+<div align="center"><h1>easyMenu</h1></div>
 
+<div align="center">easyMenu is a python package used to easily create complex cmd menus just by writing a <a href="#json">json file</a></div>
 
-# JSON STRUCTURE
+## Content
+
+- ### <a href="#install">How to install</a>
+- ### <a href="#how">How to use</a>
+- ### <a href="#json">JSON structure</a>
+
+<div id="install"></div>
+
+## How to install
+
+Open  your cmd and type:
+
+```python
+pip install easyMenu
+```
+
+<div id="how"></div>
+
+## How to use
+
+First of all you need to import the package by adding this to your python file:
+
+```python
+from easyMenu import Menu
+```
+Then you need to create a Menu object instance passing the path of the JSON file as an argument by doing:
+
+```python
+instance = Menu("structure.json")
+```
+
+You can also define the path of a text file containing your banner:
+
+```python
+instance = Menu("structure.json",bannerPath="banner.txt")
+```
+
+After creating the object you can start the menu with the start() method, that will return when a <a href="#actions">'return' action</a> is met
+
+```python
+data = instance.start()
+```
+
+<div id="json"></div>
+
+## Json structure
 
 ```json
 {
@@ -27,7 +74,7 @@
 }
 ```
 
-# Global menu variables
+## Global menu variables
 
 This fields are needed in every menu 
 
@@ -38,7 +85,7 @@ type|:white_check_mark:|Specify the <a href="#">menu type</a>|str
 banner|:x:| Print the banner (default true) | bool
 action|:x:|<a href="#actions">Action</a> after menu (default continue)|str
 
-# Menu types
+## Menu types
 
 Menu type |  Description |
 :--------:|--------------|
@@ -48,11 +95,12 @@ Menu type |  Description |
 <a href="#back">back</a>| Go back to the previous menu (exit the program in case of main menu)
 
 <a id="options"></a>
-# Options Menu
+
+## Options Menu
 
 > Ask user to choose between the childs menus
 
-## Fields
+### Fields
 
 Field Name | Required |Description
 :---------:|:--------:|-----------
@@ -60,7 +108,8 @@ Name|:white_check_mark:| The name of the menu
 Value Name|:x:|
 
 <a id="input"></a>
-# Input menu
+
+## Input menu
 
 > Ask the user for an input
 
@@ -82,7 +131,7 @@ Value Name|:x:|
 }
 ```
 
-## Fields
+### Fields
 
 Field Name | Required |Description|Data type
 :---------:|:--------:|-----------|:----:
