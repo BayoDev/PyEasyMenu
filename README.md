@@ -1,4 +1,6 @@
-<div align="center"><h1>easyMenu</h1></div>
+# <div align="center">easyMenu</div>
+
+# <div align="center">:warning:THIS PROJECT IS IN AN EARLY DEVELOPMENT STAGE AND IT'S NOT AVAILABLE WITH PIP:warning:</div>
 
 <div align="center">easyMenu is a python package used to easily create complex cmd menus just by writing a <a href="#json">json file</a></div>
 
