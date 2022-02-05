@@ -1,9 +1,11 @@
 from lib2to3.pytree import Node
 import os
 import json
+from tkinter import N
 from unittest import expectedFailure
 
 from pexpect import ExceptionPexpect
+from urllib3 import Retry
 
 class TreeNode:
     
@@ -25,12 +27,35 @@ class TreeNode:
     def add_child(self,child:object) -> None:
         self.childs.append(child)
 
-    def find_childs(self,data: dict) -> None:
+    def parse_childs(self,data: dict) -> None:
         if 'childs' in data.keys() and len(data['childs']) != 0:
             for sub in data['childs']:
                 newChild = TreeNode(self,sub.copy())
-                newChild.find_childs(sub)
+                newChild.parse_childs(sub)
                 self.add_child(newChild)
+
+    def find_child(self,search: dict) -> object:
+        if len(search.keys()) == 0:
+            return None
+
+        found = True
+        for key in search.keys():
+            if key not in self.subMenu.keys() or self.subMenu[key] != search[key]:
+                found = False
+
+        if found:
+            return self
+
+        if len(self.childs) == 0:
+            return None
+
+        for node in self.childs:
+            result = node.find_child(search)
+            if result != None:
+                return result
+
+        return None
+
 
     def __check_error(self,data:dict,childsNum: int) -> None:
         rules = {
@@ -88,6 +113,7 @@ class Menu:
     banner: str
     _currentNode: TreeNode
     _input_data: dict
+    _root: TreeNode
 
     def __init__(self,filePath,bannerPath=None) -> None:
 
@@ -127,11 +153,20 @@ class Menu:
 
         self._currentNode.subMenu['type'] = 'options'
 
+        self._root = self._currentNode
+
         self.__loop()
 
         return self._input_data
 
-    def resume(self) -> dict:
+    def resume(self,search: dict = None) -> dict:
+        if search != None:
+            result = self._root.find_child(search)
+            if result != None:
+                self._currentNode = result
+            else:
+                raise Exception(f"Search with {search} parameters returned 0 results")
+
         self.__loop()
         return self._input_data
 
@@ -194,7 +229,7 @@ class Menu:
 
         firstMenu = data['struct']
         parentNode = TreeNode(None,firstMenu.copy())
-        parentNode.find_childs(firstMenu)
+        parentNode.parse_childs(firstMenu)
 
         return parentNode
 
