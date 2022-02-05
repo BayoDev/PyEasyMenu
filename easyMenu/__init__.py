@@ -1,1 +1,1 @@
-from .menuClass import *
+from .menuClass import Menu
