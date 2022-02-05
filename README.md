@@ -17,7 +17,7 @@
 Open  your cmd and type:
 
 ```python
-pip install easyMenu
+pip install PyEasyMenu
 ```
 
 <div id="how"></div>
@@ -27,7 +27,7 @@ pip install easyMenu
 First of all you need to import the package by adding this to your python file:
 
 ```python
-from easyMenu import Menu
+from PyEasyMenu import Menu
 ```
 Then you need to create a Menu object instance passing the path of the JSON file as an argument by doing:
 
