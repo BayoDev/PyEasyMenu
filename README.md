@@ -1,5 +1,9 @@
 # <div align="center">PyEasyMenu</div>
 
+![Github contributors](https://img.shields.io/github/contributors-anon/BayoDev/PyEasyMenu)
+![Last commit](https://img.shields.io/github/last-commit/BayoDev/PyEasyMenu)
+![License](https://img.shields.io/github/license/BayoDev/PyEasyMenu)
+
 <div align="center">PyEasyMenu is a python package used to easily create complex cmd menus just by writing a <a href="#json">json file</a></div>
 
 ## Content
